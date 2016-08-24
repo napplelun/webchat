@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>webchat</title>
+<style type="text/css">
+#outarea{
+	width: 900px;
+	height: 450px;
+	border: solid 1px;
+}
+
+</style>
+</head>
+<body>
+
+<div id='outarea'>
+
+</div>
+
+<div id='inputarea'>
+<textarea rows="10" cols="80" id="inputData"></textarea>
+<button id="send">send</button>
+</div>
+<script type="text/javascript" src="../../resource/jquery-3.1.0.min.js"></script>
+<script type="text/javascript">
+var ws = new WebSocket("ws://localhost:10005"); 
+ ws.onopen = function(){ws.send("Test!"); }; 
+
+ $(function(){
+ 	$("#send").click(function(){
+ 		var data = $("#inputData").val();
+ 		ws.send(data)
+ 	})
+ 	
+ })
+ws.onmessage = function(evt){
+ 	console.log(evt.data);
+ 	// ws.close();
+	 }; 
+ 
+ // ws.onclose = function(evt){console.log("WebSocketClosed!");}; 
+ ws.onerror = function(evt){console.log("WebSocketError!");};
+</script>
+
+</body>
+</html>
